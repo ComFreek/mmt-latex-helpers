@@ -5,7 +5,7 @@
 LaTeX utility macros for typesetting papers and theses involving the [MMT Language](https://uniformal.github.io/) including
 
 - an `mmttheory` environment (see image below)
-- macros for typesetting simply- and dependently-typed function types (arrows, Pis), functions (lambdas) in different variants:
+- macros for typesetting simply- and dependently-typed function types (arrows, Pis), functions (lambdas) in different variants all with nice spacing:
   - simple
   - variadic
   - doubly, triply variadic (e.g. to ultimately typeset `\Pi a \Pi b \Pi c ... \Pi d \Pi e \Pi f`)
