@@ -1,0 +1,146 @@
+% PROPOSITIONAL LOGIC + NATURAL DEDUCTION
+% ==================================================
+\makecn{PL}
+\makecn{PLND}
+\makecn{prop}
+
+\newcommand\dedc{\cn{\mathnormal{\Vdash}}}
+\newcommand\ded{\Vdash}
+
+\newcommand\andc{\cn{\mathnormal{\wedge}}}
+\newcommand\andIntro{\andc_{\cn{I}}}
+\newcommand{\andElimIdx}[1]{\andc_{\cn{E#1}}}
+\newcommand\andElimL{\andElimIdx{L}}
+\newcommand\andElimR{\andElimIdx{R}}
+
+\newcommand\orc{\cn{\mathnormal{\vee}}}
+\newcommand\orElim{\orc_{\cn{E}}}
+\newcommand\orIntroL{\orc_{\cn{IL}}}
+\newcommand\orIntroR{\orc_{\cn{IR}}}
+
+\newcommand\negc{\cn{\mathnormal{\lnot}}}
+\newcommand\negIntro{\negc_{\cn{I}}}
+\newcommand\negElim{\negc_{\cn{E}}}
+
+\newcommand\equivs{\Leftrightarrow}% latex already defines \equiv, so use \equivs (s for "symbol")
+\newcommand\equivc{\cn{\mathnormal{\Leftrightarrow}}}
+\newcommand\equivIntro{\equivc_{\cn{I}}}
+\newcommand\equivElimL{\equivc_{\cn{EL}}}
+\newcommand\equivElimR{\equivc_{\cn{ER}}}
+
+\newcommand\falsum{\cn{\mathnormal{\bot}}}
+\newcommand\falsumIntro{\falsum_{\cn{I}}}
+
+% Double-stroked not symbols
+%
+% Source: https://tex.stackexchange.com/a/41141/38074
+% Author: egreg <https://tex.stackexchange.com/users/4427/egreg>
+% License: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
+\newcommand{\blnot}{\mathord{\mathpalette\xblnot\relax}}
+\newcommand{\xblnot}[2]{
+	\sbox2{$#1\lnot$}\vrule height 1.1\ht2 width0pt \ooalign{%
+		\hphantom{$#1-$}\relax\cr
+		\noalign{\vskip-.2\ht2}
+		\hfil$#1\lnot$\hfil\cr
+		\noalign{\vskip.4\ht2}
+		\hfil$#1\lnot$\hfil\cr
+		\noalign{\vskip-.2\ht2}}%
+}
+% END: Double-stroked not symbols
+\newcommand\doublenegc{\cn{\mathnormal{\blnot}}}
+\newcommand\doubleNegIntro{\doublenegc_{\cn{I}}}
+% ==================================================
+
+
+% UNTYPED AND TYPED (SORTED) FIRST-ORDER LOGIC
+% ==================================================
+\makecn{FOL}
+% sorted (aka typed) FOL; polymorphic FOL; dependent FOL; polymorphic+dependent FOL
+\makecn{SFOL}\makecn{TFOL}\makecn{PFOL}\makecn{DFOL}\makecn{PDFOL}
+\makecn{tp}
+\makecn{ind}
+\newcommand\forallc{\cn{\mathnormal{\forall}}}
+\newcommand\eqc{\cn{\mathnormal{\doteq}}}
+
+% forall (weird name to not clash with latex's \forall)
+\NewDocumentCommand\fall{m o}{\quantifier{\forall}{#1}[#2]}
+
+% exists (weird name to not clash with latex's \exists)
+\NewDocumentCommand\xists{m o}{\quantifier{\forall}{#1}[#2]}
+
+
+%\newcommand{\of}[2]{#1\,::\,#2}
+%\newcommand{\denseOfTermType}[2]{#1\kern -0.1em::\kern -0.1em#2}
+
+%\newcommand{\spacedtmS}[2]{\tmS{\kern 0.05em#1\kern 0.06em#2}}
+
+% Typeset "\forall #1:#2, ..., #3:#4." with good spacing and dense ldots
+% The types #2 and #4 are optional (and thus given via square brackets)
+% Examples: `\flexForall{s}[S]{t}[T]`
+%           `\flexForall{s}{t}`
+\NewDocumentCommand\flexForall{m o m o}{\ensuremath{%
+		\forall\, #1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}%
+		,\denseLdots,%
+		#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}%
+		.\hspace{0.6em}
+}}
+
+% Typeset "\forall #1:#2, ..., #3:#4." with dense spacing and dense ldots
+%\newcommand{\denselexaryForall}[4]{\ensuremath{\forall\, #1\colon#2,\denseLdots,#3\colon#4.\hspace{0.6em}}}
+
+\NewDocumentCommand\funSymType{mmm}{\flexFunType{\tm{#1}}{\tm{#2}}{\tm{#3}}}
+\NewDocumentCommand\predSymType{mm}{\flexFunType{\tm{#1}}{\tm{#2}}{\prop}}
+
+% Typeset dense "\colon\ded"
+\newcommand\colonded{\colon\kern -0.25em\ded}
+%% END: sorted first-order logic %%
+
+%% NATURAL DEDUCTION FOR SORTED FIRST-ORDER LOGIC %%
+\newcommand\forallIntro{\cn{\mathnormal{\forall}I}}
+\newcommand\forallElim{\cn{\mathnormal{\forall}E}}
+
+% "flowed"
+\newcommand{\leftflowedcn}[1]{\cn{#1}\kern0.3em}
+\newcommand{\midflowedcn}[1]{\mathbin{\kern0.3em\cn{#1}\kern0.3em}}
+\newcommand{\rightflowedcn}[1]{\kern0.3em\cn{#1}}
+
+\newcommand\frefl{\leftflowedcn{refl}}
+\makecn{refl}
+
+\newcommand\fexistsIntro{\leftflowedcn{existsI}}
+\newcommand\fexistsElim{\midflowedcn{existsE}}
+
+\newcommand\fimplIntro{\leftflowedcn{implI}}
+\newcommand\fimplElim{\midflowedcn{implE}}
+
+\newcommand\fandIntro{\leftflowedcn{andI}}
+\newcommand\fandElimL{\rightflowedcn{andEL}}
+\newcommand\fandElimR{\rightflowedcn{andER}}
+
+\newcommand\forIntroL{\leftflowedcn{orIL}}
+\newcommand\forIntroR{\leftflowedcn{orIR}}
+\newcommand\forElim{\midflowedcn{orE}}
+
+\newcommand\fforallIntro{\leftflowedcn{forallI}}
+\newcommand\fforallElim{\midflowedcn{forallE}}
+
+\newcommand\fdepimpl{\midflowedcn{depImpl}}
+\newcommand\fdepand{\midflowedcn{depAnd}}
+
+% use in \begin{align*} instead of \\ to issue a bigger break useful to separate things (e.g. inclusions and actual theory body)
+\newcommand\alignskip{\\[0.6em]}
+% If you want to typeset, e.g., "... forallE blub", use `\dotsBeforeFlow \fforallElim blub`.
+% Do _not_ employ `\denseLdots \fforallElim blub` as this will miss suitable space before \denseLdots.
+\newcommand\dotsBeforeFlow{\kern0.3em\denseLdots}
+\makecn{cong}
+\newcommand\fcong{\midflowedcn{cong}}
+
+% typeset variable name "pf" for LF variables representing proofs (in natural deduction calculi)
+\newcommand\pf{\mathit{pf}}
+
+% for constant identifiers of axiom symbols
+\newcommand\ax{\mathit{ax}}
+%% END: natural deduction for sorted first-order logic %%
+
+% ==================================================
+

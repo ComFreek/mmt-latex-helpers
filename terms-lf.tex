@@ -1,0 +1,114 @@
+% LF
+% ==================================================
+% incl. macros for typesetting variadic function
+% both simply- and dependently-typed, variadic
+% functions; all in different variants
+% ==================================================
+
+\makecn{type}
+% judgements of LF
+\newcommand\LFded{\vdash}
+
+% anonymous functions, see \quantifier
+\NewDocumentCommand\lam{m o}{\quantifier{\lambda}{#1}[#2]}
+\newcommand{\ignorelam}{\lam{\_}}% for arguments thrown away
+
+% see \quantifier
+% useful in cases where one talks abount bound variables irrespective whether they are bound by lambda or Pi
+\NewDocumentCommand\lampi{m o}{\quantifier{\lambda\kern -0.1em\Pi\,}{#1}[#2]}
+
+% dependent function types, see \quantifier
+\NewDocumentCommand\tpi{m o}{\quantifier{\Pi\,}{#1}[#2]}
+
+% Typeset #1 -> ... -> #2 -> #3 with thin spacing between arrows and in ...
+\newcommand{\flexFunType}[3]{\ensuremath{#1\denseTo\denseLdots\denseTo#2\denseTo#3}}
+
+% Typeset #1 -> ... -> #2 with thin spacing between arrows and in ...
+\newcommand{\flexHomogeneousFunType}[2]{\ensuremath{#1\denseTo\denseLdots\denseTo#2}}
+
+% Typeset \lambda #1:#2 ... #3:#4 where the types can be given
+% as optional arguments.
+% E.g. `\flexFun{s}[S]{t}[T]` typesets `\lambda s: S. ... \lambda t: T.`
+% And `\flexFun{s}{t}` typesets just `\lambda s. ... \lambda t.`.
+\NewDocumentCommand\flexFun{m o m o}{\ensuremath{%
+		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.\,%
+		\denseLdots\kern 0.1em%
+		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.%
+		\hspace{0.6em}%
+}}
+
+% Typeset `\lambda #1:#2 \lambda #3:#4 ... \lambda #5:#6 \lambda #7:8` where the types can be given
+% as optional arguments.
+% E.g. `\flexFun{x_1}[X_1]{x_1'}[X_1']{x_n}[X_n]{x_n'}[U]` typesets `\lambda x_1:X_1 \lambda x_1':X_1' ... \lambda x_n:X_n \lambda x_n':X_n'`
+%
+% useful in the setting of logical relations along one morphisms (each pair of lambdas binds a term and a proof of it being in the relation)
+\NewDocumentCommand\flexDoubleFun{momo momo}{\ensuremath{%
+		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.\,%
+		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.\,%
+		\denseLdots\kern 0.1em%
+		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.%
+		\lambda\,#7\IfValueT{#8}{\kern -0.1em\colon\kern -0.08em#8}.%
+		\hspace{0.6em}%
+}}
+
+% Use like:
+% \flexTripleFunStart{x_1}{x_1'}{x_1^\ast}\flexTripleFunEnd{x_n}{x_n'}{x_n^\ast}
+% useful in the setting of logical relations along two morphisms (each triple of lambdas binds two terms and a proof of them being in the relation)
+%
+% Split into "Start" and "End" commands because LaTeX cannot accept >= 10 parameters.
+\NewDocumentCommand\flexTripleFunStart{momomo}{\ensuremath{%
+		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.\,%
+		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.\,%
+		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.\,%
+		\denseLdots\kern 0.1em%
+}}
+\NewDocumentCommand\flexTripleFunEnd{momomo}{\ensuremath{%
+		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.%
+		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.%
+		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.%
+		\hspace{0.6em}%
+}}
+
+% typeset `\Pi #1 #2 #3. ... \Pi #4 #5 #6.`
+% all Pis are untyped
+\NewDocumentCommand\flexTripleDepFun{mmmmmm}{\ensuremath{%
+		\tpi{#1\,#2\,#3}\denseLdots\kern 0.1em\tpi{#4\,#5\,#6}%
+}}
+
+% Typeset "\Pi #1:#2 ... \Pi #3:#4." with good spacing and dense ldots
+\NewDocumentCommand\flexPi{momo}{\ensuremath{%
+		\tpi{#1}[#2]\,\denseLdots\,\tpi{#3}[#4]%
+}}
+
+% Typeset #1 #2 ... #3
+\newcommand{\flexApp}[3]{\ensuremath{#1\ #2\ \denseLdots\ #3}}
+
+% Typeset "\Pi #1:#2 \Pi #3:#4 ... \Pi #5:#6 \Pi #7:#8." with good spacing and dense ldots
+% If nineth argument is given, typesets
+%   \Pi #1:#2 \Pi #3:#4
+%   \vdots
+%   \Pi #5:#6 \Pi #7:#8 #9
+%
+% useful for logical relations along a single morphism, there #3:#4 and #7:#8 represent the proof of #1:'2 and #5:#6 being in the relation, respectively
+\NewDocumentCommand\flexDoublePi{momo momo o}{\ensuremath{%
+		\IfValueTF{#9}{%
+			\begin{aligned}[t]%
+				&\tpi{#1}[#2]\tpi{#3}[#4]\\[-0.5em]%
+				&\vdots\\[-0.4em]%
+				&\tpi{#5}[#6]\tpi{#7}[#8]#9\\%
+			\end{aligned}%
+		}{%
+			\tpi{#1}[#2]\tpi{#3}[#4]%
+			\,\denseLdots\,%
+			\tpi{#5}[#6]\tpi{#7}[#8]%
+		}%
+}}
+\NewDocumentCommand\flexTriplePiStart{momomo}{%
+	\begin{aligned}[t]%
+		&\tpi{#1}[#2]\tpi{#3}[#4]\tpi{#5}[#6]\\[-0.5em]%
+		&\vdots\\[-0.4em]%
+	}
+\NewDocumentCommand\flexTriplePiEnd{momomo o}{%
+		&\tpi{#1}[#2]\tpi{#3}[#4]\tpi{#5}[#6]\IfValueT{#7}{#7}%
+	\end{aligned}%
+}

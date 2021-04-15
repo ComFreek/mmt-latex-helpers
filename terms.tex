@@ -1,0 +1,74 @@
+\RequirePackage{amsmath,xparse,xpatch,xspace,xstring,listofitems}
+
+%%% MACROS FOR TYPESETTING MMT TERMS %%%
+\providecommand{\cn}[1]{\ensuremath{\mathtt{#1}}}
+\newcommand{\makecn}[1]{\expandafter\def\csname#1\endcsname{\cn{#1}}}
+
+% GENERAL
+% ==================================================
+\newcommand\denseTo{\kern -0.15em\to\kern -0.15em}
+
+% Command \myDots (renamed to \denseLdots here) copied and adapted from <https://tex.stackexchange.com/a/200849>
+% User: LaRiFaRi <https://tex.stackexchange.com/users/32245/larifari>
+% License: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
+\newcommand{\denseLdots}{\ifmmode\mathinner{\kern-0.06em\ldotp\kern-0.2em\ldotp\kern-0.2em\ldotp\kern-0.06em}\else.\kern-0.13em.\kern-0.13em.\fi}
+
+% \quantifier{q}{x}      typesets `q x.\ `
+% \quantifier{q}{x}[T]   typesets `q x: T.\ `
+% \quantifier{q}{x y}    typesets `q x y.\ `
+% \quantifier{q}{x y}[T] typesets `q x y: T.\ `
+%
+% see \lam, \tpi, \lampi
+\NewDocumentCommand\quantifier{m m o}{%
+	#1
+	\setsepchar{ }\readlist\vars{#2}% read list of arguments separated by space
+	\foreachitem\var\in\vars{\var\;}\mspace{-5mu}% print out all arguments separated by \;, and undoing the trailing \; by an mspace
+	\IfValueT{#3}{\colon #3}%
+	.\ %
+}
+
+% (partially copied from frmacros, Florian Rabe's personal collection of LaTeX macros)
+
+\newcommand{\mmt}{\texorpdfstring{{\normalfont\scshape{Mmt}}\xspace}{MMT\ }}
+\newcommand{\omdoc}{{\scshape{OMDoc}}\xspace}
+\newcommand{\omdocmmt}{{\scshape{OMDoc}}/\mmt}
+\newcommand{\mmtlf}{\texorpdfstring{{\normalfont\scshape{Mmt}/LF}\xspace}{MMT/LF\ }}
+\newcommand{\ommt}{\omdocmmt}
+\newcommand{\mathml}{{\scshape{MathML}}\xspace}
+\newcommand{\openmath}{{\scshape{OpenMath}}\xspace}
+
+\newcommand{\keyword}[1]{\operatorname{\mathbf{#1}}}
+
+\newcommand{\mor}{\ensuremath{\rightsquigarrow}}
+\newcommand{\includedIn}{\ensuremath{\hookrightarrow}}
+\newcommand{\including}{\ensuremath{\hookleftarrow}}
+
+\newcommand{\id}[1]{\mathrm{id}_{#1}}
+% ==================================================
+
+% LF
+% ==================================================
+\input{terms-lf}
+% ==================================================
+
+% UNTYPED TERMS
+% ==================================================
+\makecn{term}
+% ==================================================
+
+% HARD-TYPED TERMS
+% ==================================================
+\makecn{tp}
+\newcommand{\tm}[1]{\tmSymbol\ #1}
+\newcommand\tmSymbol{\cn{tm}}
+% ==================================================
+
+% SOFT-TYPED TERMS
+% ==================================================
+\newcommand{\ofTermType}[2]{#1\mathrel{::}#2}
+% ==================================================
+
+% LOGIC (PL, FOL, SFOL, and more)
+% ==================================================
+\input{terms-logic}
+% ==================================================

@@ -1,0 +1,108 @@
+% Containers
+% ==================================================
+% for typesetting MMT theories, views, constants; and BNF grammars
+% ==================================================
+
+\NewDocumentCommand\theory{m o o}{%
+	\keyword{theory}\;#1\IfValueT{#2}{\colon #2}\IfValueT{#3}{= #3}%
+}
+
+\NewDocumentCommand\paratheory{m m m m}{%
+	\keyword{theory}\;#1\colon #2 > #3 = #4%
+}
+
+\newcommand{\view}[3]{\operatorname{\mathbf{view}}\;#1\colon #2 \to #3}
+
+\NewDocumentCommand\incl{s m o}{%
+	\keyword{include}\;#2\IfValueT{#3}{%
+		\,\IfBooleanTF{#1}{[=#3]}{= #3}
+	}%
+}
+
+% `\const{c}{A}`     typesets `c: A`
+% `\const{c}{A}[t]`  typesets `c: A
+% `\const*{c}{A}[t]` typesets `c: A [= t]`
+\NewDocumentCommand\const{s m m o}{%
+	#2\colon #3\IfValueT{#4}{%
+		\,\IfBooleanTF{#1}{[=#4]}{= #4}
+	}%
+}
+
+\NewDocumentCommand\paraincl{m m}{%
+	\keyword{include}\;#1\ #2%
+}
+\NewDocumentCommand\structure{s m m o}{%
+	\keyword{structure}\;#2\colon#3\IfValueT{#4}{%
+		\,\IfBooleanTF{#1}{[=#4]}{= #4}
+	}%
+}
+
+\newcommand{\includeDecl}[1]{\incl{#1}}
+\newcommand{\realize}[1]{\keyword{realize}{\;#1}}
+
+\NewDocumentEnvironment{mmttheory}{so+b}{%
+	\IfBooleanTF{#1}{%
+		TODO%
+	}{%
+		\[\theory{#2} = \left\{\begin{array}{l@{\colon}l}#3\end{array}\right\}\]
+	}%
+}{}
+\NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
+
+\makeatletter
+% unused, deprecated, use \mmtcont and \mmtdef
+\NewDocumentCommand\mmtdecl{mo}{%
+	\setsepchar{\\}%
+	\readlist*\mylines{#1}%
+	% see https://chat.stackexchange.com/transcript/message/57658768#57658768
+	\gdef\bdy{}%
+	\foreachitem\myline\in\mylines{\g@addto@macro\bdy{&\myline\\}}%
+	\begin{aligned}[t]\bdy\end{aligned}%
+	\IfValueT{#2}{%
+		\\\multicolumn{1}{l@{=}}{}&#2
+	}%
+}
+\makeatother
+
+% continue right-hand side expression of current line of mmttheory on next line
+% by default, the new line gets indented by \quad, you can override the space by the optional argument (e.g. `\mmtcond[\;]`)
+% if starred, no indentation is applied
+\NewDocumentCommand\mmtcont{sO{\quad}}{%
+	\\\multicolumn{1}{l}{}&\IfBooleanTF{#1}{}{#2}%
+}
+
+% begin a definiens right-hand side expression on next line of mmttheory
+\NewDocumentCommand\mmtdef{}{\\\multicolumn{1}{l@{=}}{}&}
+\NewDocumentCommand\mmtskip{}{\\[0.4em]}
+
+%Example:
+%\begin{mmttheory}
+%	A & \prop \to \prop \to\mmtcont
+%	\type\\
+%	B & \prop \to \prop \to \type\mmtdef
+%	\lam{p q}\mmtcont
+%	A\ p\ q
+%\end{mmttheory}
+
+% Grammars, from https://github.com/UniFormal/implicit/blob/aaba021c3238eae022c5dc620a0f9a7f75fac68e/macros/basics.sty
+% CFGs
+
+\newcommand{\tb}{\hspace*{.5cm}}
+\newenvironment{grammar}{\[\begin{array}{l@{\tb\bbc\tb}l@{\tb}l}}{\end{array}\]}
+
+%Added by Navid Roux:
+\newenvironment{packedgrammar}{\[\begin{array}{l@{\hspace*{.2cm}\bbc\hspace*{.2cm}}l@{\hspace*{.2cm}}l}}{\end{array}\]}
+
+\newcommand{\bnf}[1]{#1}
+\newcommand{\bbc}{\bnf{::=}}
+\newcommand{\bnfalt}{\ensuremath{\;\bnf{|}\;}}
+\providecommand{\alt}{\ensuremath{\;\bnf{|}\;}} % already used by beamer
+\newcommand{\opt}[1]{\bnf{[}#1\bnf{]}}
+\newcommand{\bnfbracket}[1]{\bnf{(}#1\bnf{)}}
+\newcommand{\rep}[1]{#1^{\bnf{\ast}}}
+\newcommand{\bnfchoice}[1]{\bnf{[}#1\bnf{]}}
+\newcommand{\bnfnegchoice}[1]{\bnf{[\caret}#1\bnf{]}}
+
+% Added by Navid Roux:
+\newcommand{\grammarEmptyRow}{\multicolumn{1}{c}{}\\}
+% Grammars End
