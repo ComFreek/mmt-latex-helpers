@@ -11,6 +11,7 @@ LaTeX utility macros for typesetting papers and theses involving the [MMT Langua
   - doubly, triply variadic (e.g. to ultimately typeset `\Pi a \Pi b \Pi c ... \Pi d \Pi e \Pi f`): `\flexDoublePi`, `\flexTriplePi`
   - each variant (Pis, lambdas) accepts types of the variables as optional arguments
   - each variant supports (Pis, lambdas) accepts multiple variables too (e.g. `\lam{a b}[T]` to typeset `\lambda a\,b\colon T`)
+  - and more stuff
 - macros for typesetting various FOL and SFOL stuff
 
 ## Documentation
