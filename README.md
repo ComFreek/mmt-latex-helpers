@@ -24,6 +24,7 @@ So far no shiny external documentation is available; you have to read the inline
 
 ```
 \makecn{Unital}
+\makecn{neut}
 
 \begin{mmttheory}[\Unital]
     \mmtinclude{\SFOL}
