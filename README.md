@@ -14,6 +14,25 @@ LaTeX utility macros for typesetting papers and theses involving the [MMT Langua
   - and more stuff
 - macros for typesetting various FOL and SFOL stuff
 
+## Installation
+
+1. Get ahold of this repository's files, e.g. via [git subrepo](https://github.com/ingydotnet/git-subrepo):
+
+   ```bash
+   > git subrepo clone https://github.com/ComFreek/mmt-latex-helpers.git mmt-latex-helpers
+   ```
+2. Include the file `all.tex` in your LaTeX document:
+
+   ```tex
+   \RequirePackage{import}
+   \subimport{mmt-latex-helpers}{all}
+   ```
+   
+   Here, we use the `subimport` command from the `import` package to allow `all.tex` to include files relatively to its containing directory.
+   E.g. `all.tex` contains an `\input{terms}`, which would fail if we didn't use `subimport` above.
+
+3. Test by writing `$\lam{x}[S] t$` somewhere in your document. This should render as `λx: S. t`.
+
 ## Documentation
 
 So far no shiny external documentation is available; you have to read the inline documentation in source, unfortunately 😀
