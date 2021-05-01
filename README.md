@@ -33,6 +33,30 @@ LaTeX utility macros for typesetting papers and theses involving the [MMT Langua
 
 3. Test by writing `$\lam{x}[S] t$` somewhere in your document. This should render as `λx: S. t`.
 
+## Minimal Working Example
+
+Assuming you performed step 1 of the installation above, the following should compile fine with any TeX distribution:
+
+```tex
+\documentclass[]{article}
+
+\RequirePackage{import}
+\subimport{mmt-latex-helpers}{all}
+
+\begin{document}
+
+\begin{mmttheory}[T]
+	S & \type\\
+	T & \type\\
+	t & T\\
+	c & S \to T\\
+	d & S \to T\mmtdef
+	    \lam{s}[S] c\ s
+\end{mmttheory}
+
+\end{document}
+```
+
 ## Documentation
 
 So far no shiny external documentation is available; you have to read the inline documentation in source, unfortunately 😀
