@@ -11,7 +11,8 @@
 
 % anonymous functions, see \quantifier
 \NewDocumentCommand\lam{m o}{\quantifier{\lambda}{#1}[#2]}
-\newcommand{\ignorelam}{\lam{\_}}% for arguments thrown away
+% bind arguments that are never used
+\NewDocumentCommand\ignorelam{o}{\lam{\_}[#1]}
 
 % see \quantifier
 % useful in cases where one talks abount bound variables irrespective whether they are bound by lambda or Pi
