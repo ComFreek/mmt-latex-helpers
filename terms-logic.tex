@@ -9,25 +9,41 @@
 \newcommand\ded{\Vdash}
 
 \newcommand\andc{\cn{\mathnormal{\wedge}}}
-\newcommand\andIntro{\andc_{\cn{I}}}
-\newcommand{\andElimIdx}[1]{\andc_{\cn{E#1}}}
-\newcommand\andElimL{\andElimIdx{L}}
-\newcommand\andElimR{\andElimIdx{R}}
 
 \newcommand\orc{\cn{\mathnormal{\vee}}}
 \newcommand\orElim{\orc_{\cn{E}}}
 \newcommand\orIntroL{\orc_{\cn{IL}}}
 \newcommand\orIntroR{\orc_{\cn{IR}}}
 
-\newcommand\negc{\cn{\mathnormal{\lnot}}}
-\newcommand\negIntro{\negc_{\cn{I}}}
-\newcommand\negElim{\negc_{\cn{E}}}
+% to typeset negation, use \neg (which is the same as \lnot as per LaTeX, see https://tex.stackexchange.com/questions/430677/what-is-the-difference-between-lnot-and-neg)
 
-\newcommand\equivs{\Leftrightarrow}% latex already defines \equiv, so use \equivs (s for "symbol")
-\newcommand\equivc{\cn{\mathnormal{\Leftrightarrow}}}
+\newcommand\negc{\cn{\mathnormal{\lnot}}}
+\NewDocumentCommand\negIntro{mo}{%
+	\leftflowed{\cn{\negc I}_{#1\IfValueT{#2}{\colon #2}}}%
+}
+\newcommand\negElim{\midflowedcn{\negc E}}
+
+\newcommand\impl{\Rightarrow}
+\newcommand\implc{\mathnormal{\Rightarrow}}
+\newcommand\biimpl{\Leftrightarrow}
+\newcommand\biimplc{\mathnormal{\Leftrightarrow}}
+\newcommand\biimplIntro{\leftflowedcn{\biimplc I}}
+% elimination of the forward implication
+\newcommand\biimplElimFwd{\midflowedcn{\biimplc \overset{{}_{\rightarrow}}{E}}}
+% elimination of the backwrad implication
+\newcommand\biimplElimBwd{\midflowedcn{\biimplc \overset{{}_{\leftarrow}}{E}}}
+
+% latex already defines \equiv, so use \equivs (s for "symbol")
+% deprecated, use \biimpl
+\newcommand\equivs{\biimpl}
+% deprecated, use \biimplc
+\newcommand\equivc{\biimplc}
+% deprecated, use \biimplIntro
 \newcommand\equivIntro{\equivc_{\cn{I}}}
-\newcommand\equivElimL{\equivc_{\cn{EL}}}
-\newcommand\equivElimR{\equivc_{\cn{ER}}}
+% deprecated, use \biimplElimL
+\newcommand\equivElimL{\biimplElimL}
+% deprecated, use \biimplElimR
+\newcommand\equivElimR{\biimplElimR}
 
 \newcommand\falsum{\cn{\mathnormal{\bot}}}
 \newcommand\falsumIntro{\falsum_{\cn{I}}}
@@ -61,14 +77,24 @@
 \makecn{tp}
 \makecn{ind}
 \newcommand\forallc{\cn{\mathnormal{\forall}}}
+
+% use \doteq for \eq relation
+% and \eqc for raw symbol
 \newcommand\eqc{\cn{\mathnormal{\doteq}}}
 
+% meta-level equality on SFOL types
+\newcommand\tpeq{\mathrel{\overset{\ast}{=}}}
+\newcommand\tpeqc{\mathnormal{\overset{\ast}{=}}}
+
+\RequirePackage{esvect}
+% transport value #1 along type equality #2
+\NewDocumentCommand\tptrans{mm}{\vv{#1}^{#2}}
+
 % forall (weird name to not clash with latex's \forall)
-\NewDocumentCommand\fall{m o}{\quantifier{\forall}{#1}[#2]}
+\NewDocumentCommand\fall{m o}{\quantifier{\forall\,}{#1}[#2]}
 
 % exists (weird name to not clash with latex's \exists)
-\NewDocumentCommand\xists{m o}{\quantifier{\forall}{#1}[#2]}
-
+\NewDocumentCommand\xists{m o}{\quantifier{\exists\,}{#1}[#2]}
 
 %\newcommand{\of}[2]{#1\,::\,#2}
 %\newcommand{\denseOfTermType}[2]{#1\kern -0.1em::\kern -0.1em#2}
@@ -97,18 +123,36 @@
 %% END: sorted first-order logic %%
 
 %% NATURAL DEDUCTION FOR SORTED FIRST-ORDER LOGIC %%
-\newcommand\forallIntro{\cn{\mathnormal{\forall}I}}
-\newcommand\forallElim{\cn{\mathnormal{\forall}E}}
+\newcommand\forallElim{\midflowedcn{\mathnormal{\forall}E}}
+
+% natural deduction kern preceeding other natural deduction macros below
+\newcommand\ndleftkern{\kern0.3em}
+% natural deduction following other natural deduction macros below
+\newcommand\ndrightkern{\kern0.3em}
 
 % "flowed"
-\newcommand{\leftflowedcn}[1]{\cn{#1}\kern0.3em}
-\newcommand{\midflowedcn}[1]{\mathbin{\kern0.3em\cn{#1}\kern0.3em}}
-\newcommand{\rightflowedcn}[1]{\kern0.3em\cn{#1}}
+\newcommand{\leftflowed}[1]{#1\ndrightkern}
+\newcommand{\leftflowedcn}[1]{\leftflowed{\cn{#1}}}
+\newcommand{\midflowed}[1]{\mathbin{\ndleftkern#1\ndrightkern}}
+\newcommand{\midflowedcn}[1]{\midflowed{\cn{#1}}}
+\newcommand{\rightflowed}[1]{\ndleftkern#1}
+\newcommand{\rightflowedcn}[1]{\rightflowed{\cn{#1}}}
+
+\NewDocumentCommand\forallIntro{mo}{%
+	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\IfValueT{#2}{#2}}}%
+}
+\NewDocumentCommand\existsElim{mm}{%
+	\midflowed{\cn{\mathnormal{\exists}E}_{#1,#2}}%
+}
 
 \newcommand\frefl{\leftflowedcn{refl}}
+
 \makecn{refl}
+\makecn{symm}
+\makecn{trans}
 
 \newcommand\fexistsIntro{\leftflowedcn{existsI}}
+\newcommand\existsIntro{\leftflowedcn{\exists I}}
 \newcommand\fexistsElim{\midflowedcn{existsE}}
 
 \newcommand\fimplIntro{\leftflowedcn{implI}}
@@ -132,16 +176,77 @@
 \newcommand\alignskip{\\[0.6em]}
 % If you want to typeset, e.g., "... forallE blub", use `\dotsBeforeFlow \fforallElim blub`.
 % Do _not_ employ `\denseLdots \fforallElim blub` as this will miss suitable space before \denseLdots.
-\newcommand\dotsBeforeFlow{\kern0.3em\denseLdots}
+\newcommand\dotsBeforeFlow{\ndleftkern\denseLdots}
 \makecn{cong}
 \newcommand\fcong{\midflowedcn{cong}}
 
-% typeset variable name "pf" for LF variables representing proofs (in natural deduction calculi)
-\newcommand\pf{\mathit{pf}}
+% typeset variable name "pf" (and variants) for LF variables representing proofs (in natural deduction calculi)
+% \pf* typesets "pf'"
+% \pf[x] typesets "{pf^{x}}" (thus it enables you to use `\lam{\pf[x]^p \pf[x]^s}`)
+\NewDocumentCommand\pf{so}{%
+	\IfValueTF{#2}{%
+		{\mathit{pf^{#2}}}%
+	}{%
+		\IfBooleanTF{#1}{{\mathit{pf'}}}{\mathit{pf}}%
+	}%
+}
 
 % for constant identifiers of axiom symbols
 \newcommand\ax{\mathit{ax}}
 %% END: natural deduction for sorted first-order logic %%
-
 % ==================================================
 
+% (DEPENDENT) CONJUNCTION
+% ==================================================
+\NewDocumentCommand\depandc{}{\andc_{-}}
+
+\NewDocumentCommand\depand{mo}{%
+	\ndleftkern\wedge_{#1\IfValueT{#2}{\colon #2}}\ndrightkern%
+}
+% alias for \depand
+\NewDocumentCommand\depwedge{mo}{\depand{#1}[#2]}
+
+\newcommand\andIntro{\leftflowedcn{\mathnormal{\wedge}I}}
+\NewDocumentCommand\depandIntro{}{%
+	\leftflowedcn{\mathnormal{\wedge}I}%
+}
+
+\newcommand\andElimL{\rightflowedcn{\mathnormal{\wedge}EL}}
+\newcommand\andElimR{\rightflowedcn{\mathnormal{\wedge}ER}}
+\NewDocumentCommand\depandElimL{}{\rightflowedcn{\mathnormal{\wedge}EL}}
+\NewDocumentCommand\depandElimR{}{\rightflowedcn{\mathnormal{\wedge}ER}}
+% ==================================================
+
+% (DEPENDENT) IMPLICATION
+% ==================================================
+\NewDocumentCommand\depimplc{}{\implc_{-}}
+\NewDocumentCommand\depimpl{mo}{\midflowed{\implc_{#1\IfValueT{#2}{\colon #2}}}}
+
+\NewDocumentCommand\implIntro{mo}{%
+	\leftflowed{\cn{\implc I}_{#1\IfValueT{#2}{\colon #2}}}%
+}
+\NewDocumentCommand\depimplIntro{mo}{%
+	\leftflowed{\cn{\implc I}_{#1\IfValueT{#2}{\colon #2}}}%
+}
+
+\NewDocumentCommand\implElim{}{%
+	\midflowedcn{\implc E}%
+}
+\NewDocumentCommand\depimplElim{}{%
+	\midflowedcn{\implc E}%
+}
+% ==================================================
+
+% SORT OPERATORS
+% ==================================================
+
+% for predicate subtypes
+% \usepackage[llbrace,rrbrace]{stmaryrd} --> option clash?
+% ideally, we would use llbrace and rrbrace from stmaryrd
+\NewDocumentCommand\subtype{m m}{%
+	\lVert #1 \kern-0.35em\mid\kern-0.35em #2 \rVert%
+}
+\NewDocumentCommand\downcast{m m}{#1 \kern-0.2em\downarrow\kern-0.2em #2}
+\NewDocumentCommand\upcast{m}{#1\kern-0.1em\uparrow}
+\NewDocumentCommand\proofcast{m}{#1 ?}
+% ==================================================

@@ -31,7 +31,9 @@
 \NewDocumentCommand\paraincl{m m}{%
 	\keyword{include}\;#1\ #2%
 }
-\NewDocumentCommand\structure{s m m o}{%
+
+% \structure would clash with a Beamer macro
+\NewDocumentCommand\struct{s m m o}{%
 	\keyword{structure}\;#2\colon#3\IfValueT{#4}{%
 		\,\IfBooleanTF{#1}{[=#4]}{= #4}
 	}%
@@ -47,7 +49,12 @@
 		\[\theory{#2} = \left\{\begin{array}{l@{\colon}l}#3\end{array}\right\}\]
 	}%
 }{}
+% args: view name, domain, codomain, body
+\NewDocumentEnvironment{mmtview}{mmmb}{%
+	\[\view{#1}{#2}{#3} = \left\{\begin{array}{l@{=}l}#4\end{array}\right\}\]
+}{}
 \NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
+\NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}#1}}\\}
 
 \makeatletter
 % unused, deprecated, use \mmtcont and \mmtdef

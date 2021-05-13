@@ -57,17 +57,21 @@
 %
 % Split into "Start" and "End" commands because LaTeX cannot accept >= 10 parameters.
 \NewDocumentCommand\flexTripleFunStart{momomo}{\ensuremath{%
-		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.\,%
-		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.\,%
-		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.\,%
-		\denseLdots\kern 0.1em%
+		\lam{#1}[#2] \lam{#3}[#4] \lam{#5}[#6] \denseLdots\kern 0.1em%
 }}
 \NewDocumentCommand\flexTripleFunEnd{momomo}{\ensuremath{%
-		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.%
-		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.%
-		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.%
-		\hspace{0.6em}%
+		\lam{#1}[#2] \lam{#3}[#4] \lam{#5}[#6]%
 }}
+
+%\NewDocumentCommand\flexQuadrupleFunStart{momomo}{\ensuremath{%
+%		\lam{#1}[#2] \lam{#3}[#4] \lam{#5}[#6] \\denseLdots\kern 0.1em%
+%}}
+%\NewDocumentCommand\flexQuadrupleFunEnd{momomo}{\ensuremath{%
+%		\lambda\,#1\IfValueT{#2}{\kern -0.1em\colon\kern -0.08em#2}.%
+%		\lambda\,#3\IfValueT{#4}{\kern -0.1em\colon\kern -0.08em#4}.%
+%		\lambda\,#5\IfValueT{#6}{\kern -0.1em\colon\kern -0.08em#6}.%
+%		\hspace{0.6em}%
+%}}
 
 % typeset `\Pi #1 #2 #3. ... \Pi #4 #5 #6.`
 % all Pis are untyped
@@ -81,7 +85,14 @@
 }}
 
 % Typeset #1 #2 ... #3
-\newcommand{\flexApp}[3]{\ensuremath{#1\ #2\ \denseLdots\ #3}}
+\NewDocumentCommand\flexApp{mmm}{\ensuremath{%
+	#1\ #2\ \denseLdots\ #3%
+}}
+% Typeset #1   #2 #3  ...   #4 #5
+% Useful for functions whose type is given by \flexDoublePi (or whose definition is given by \flexDoubleFun)
+\NewDocumentCommand\flexDoubleApp{m mm mm}{\ensuremath{%
+	#1\ #2\;#3\ \denseLdots\ #4\;#5
+}}
 
 % Typeset "\Pi #1:#2 \Pi #3:#4 ... \Pi #5:#6 \Pi #7:#8." with good spacing and dense ldots
 % If nineth argument is given, typesets

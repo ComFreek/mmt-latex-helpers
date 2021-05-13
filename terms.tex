@@ -19,6 +19,11 @@
 % \quantifier{q}{x y}[T] typesets `q x y: T.\ `
 %
 % see \lam, \tpi, \lampi
+%
+% If you want to use macros as bound variable names, be sure to end them via {} or some super/subscript, e.g.
+%  with `\newcommand\hatx{\hat{x}}
+%  instead of `\quantifier{q}{\hatx \hatx^y \hatx_z}` you have to write `\quantifier{q}{\hatx{} \hatx^y \hatx_z}`
+%  holds for all derived macros, too (esp. \lam, \tpi, ...)
 \NewDocumentCommand\quantifier{m m o}{%
 	#1
 	\setsepchar{ }\readlist\vars{#2}% read list of arguments separated by space
