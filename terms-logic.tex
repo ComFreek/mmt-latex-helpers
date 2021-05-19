@@ -123,6 +123,7 @@
 %% END: sorted first-order logic %%
 
 %% NATURAL DEDUCTION FOR SORTED FIRST-ORDER LOGIC %%
+\newcommand\forallElimc{\cn{\mathnormal{\forall}E}}
 \newcommand\forallElim{\midflowedcn{\mathnormal{\forall}E}}
 
 % natural deduction kern preceeding other natural deduction macros below
@@ -141,6 +142,7 @@
 \NewDocumentCommand\forallIntro{mo}{%
 	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\IfValueT{#2}{#2}}}%
 }
+\NewDocumentCommand\forallIntroc{}{\cn{\mathnormal{\forall}I}}%
 \NewDocumentCommand\existsElim{mm}{%
 	\midflowed{\cn{\mathnormal{\exists}E}_{#1,#2}}%
 }
