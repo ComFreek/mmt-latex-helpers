@@ -3,12 +3,28 @@
 % for typesetting MMT theories, views, constants; and BNF grammars
 % ==================================================
 
-\NewDocumentCommand\theory{m o o}{%
-	\keyword{theory}\;#1\IfValueT{#2}{\colon #2}\IfValueT{#3}{= #3}%
+% Source: <https://tex.stackexchange.com/a/63233/38074>
+% Author: egreg <https://tex.stackexchange.com/users/4427/egreg>
+% License: CC BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
+\ExplSyntaxOn
+\DeclareExpandableDocumentCommand{\IfNoValueOrEmptyTF}{mmm}
+{
+	\IfNoValueTF{#1}{#2}
+	{
+		\tl_if_empty:nTF {#1} {#2} {#3}
+	}
+}
+\ExplSyntaxOff
+
+% name of theory, meta theory, parameters (for parametric theories)
+\NewDocumentCommand\theory{moo}{%
+	\keyword{theory}\;#1\IfValueT{#2}{\colon #2}%
+	\IfNoValueOrEmptyTF{#3}{}{\ \{#3\}}
 }
 
-\NewDocumentCommand\paratheory{m m m m}{%
-	\keyword{theory}\;#1\colon #2 > #3 = #4%
+% name of diagram, optional meta theory
+\NewDocumentCommand\diagram{mo}{%
+	\keyword{diagram}\;#1\IfValueT{#2}{\colon #2}%
 }
 
 \newcommand{\view}[3]{\operatorname{\mathbf{view}}\;#1\colon #2 \to #3}
@@ -32,29 +48,41 @@
 	\keyword{include}\;#1\ #2%
 }
 
-% \structure would clash with a Beamer macro
-\NewDocumentCommand\struct{s m m o}{%
+% note: \structure would clash with a Beamer macro
+\NewDocumentCommand\structureDecl{s m m o}{%
 	\keyword{structure}\;#2\colon#3\IfValueT{#4}{%
 		\,\IfBooleanTF{#1}{[=#4]}{= #4}
 	}%
 }
 
-\newcommand{\includeDecl}[1]{\incl{#1}}
-\newcommand{\realize}[1]{\keyword{realize}{\;#1}}
-
-\NewDocumentEnvironment{mmttheory}{so+b}{%
-	\IfBooleanTF{#1}{%
-		TODO%
-	}{%
-		\[\theory{#2} = \left\{\begin{array}{l@{\colon}l}#3\end{array}\right\}\]
+% arguments: bracket definiens?, theory name, definiens, parameters (for includes of parametric theories)
+\NewDocumentCommand\includeDecl{smoo}{%
+	\incl{#2}\IfValueT{#4}{\ #4}\IfNoValueOrEmptyTF{#3}{}{%
+		\,\IfBooleanTF{#1}{[=#3]}{= #3}%
 	}%
+}
+\newcommand{\realizeDecl}[1]{\keyword{realize}{\;#1}}
+
+\NewDocumentEnvironment{mmttheory}{m+b}{%
+	\[\theory{#1} = \left\{\begin{array}{l@{\colon}l}#2\end{array}\right\}\]
 }{}
+\NewDocumentEnvironment{lfsig}{m+b}{%
+	\[#1 = \left\{\begin{array}{l@{\colon}l}#2\end{array}\right\}\]
+}{}
+
 % args: view name, domain, codomain, body
-\NewDocumentEnvironment{mmtview}{mmmb}{%
+\NewDocumentEnvironment{mmtview}{mmm+b}{%
 	\[\view{#1}{#2}{#3} = \left\{\begin{array}{l@{=}l}#4\end{array}\right\}\]
 }{}
 \NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
 \NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}#1}}\\}
+\NewDocumentEnvironment{lfsigmor}{m+b}{%
+	\[#1 = \left\{\begin{array}{l@{=}l}#2\end{array}\right\}\]%
+}{}
+% star means that expected types are also given
+\NewDocumentEnvironment{lfsigmor*}{m+b}{%
+	\[#1 = \left\{\begin{array}{l@{\colon}l@{=}l}#2\end{array}\right\}\]%
+}{}
 
 \makeatletter
 % unused, deprecated, use \mmtcont and \mmtdef
@@ -96,6 +124,14 @@
 
 \newcommand{\tb}{\hspace*{.5cm}}
 \newenvironment{grammar}{\[\begin{array}{l@{\tb\bbc\tb}l@{\tb}l}}{\end{array}\]}
+% use like:
+% \begin{grammar}
+% 	D & & \text{theory declarations}\grammarcont
+% 	  \bnfalt \includeDecl{T} & \quad\text{includes}\grammarcont
+% 	  \bnfalt c\colon A & \quad\text{constants}\\
+%   t & a \bnfalt b & \text{something else}
+% \end{grammar}
+\NewDocumentCommand\grammarcont{}{\\\multicolumn{1}{l}{}&}
 
 %Added by Navid Roux:
 \newenvironment{packedgrammar}{\[\begin{array}{l@{\hspace*{.2cm}\bbc\hspace*{.2cm}}l@{\hspace*{.2cm}}l}}{\end{array}\]}
