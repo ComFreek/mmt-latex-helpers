@@ -181,8 +181,8 @@
 % If you want to typeset, e.g., "... forallE blub", use `\dotsBeforeFlow \fforallElim blub`.
 % Do _not_ employ `\denseLdots \fforallElim blub` as this will miss suitable space before \denseLdots.
 \newcommand\dotsBeforeFlow{\ndleftkern\denseLdots}
-\makecn{cong}
-\newcommand\fcong{\midflowedcn{cong}}
+%\makecn{cong} clashes with latex's \cong (isomorphism symbol)
+%\newcommand\fcong{\midflowedcn{cong}}
 
 % typeset variable name "pf" (and variants) for LF variables representing proofs (in natural deduction calculi)
 % \pf* typesets "pf'"
