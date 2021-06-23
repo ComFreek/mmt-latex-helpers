@@ -25,7 +25,7 @@ LaTeX utility macros for typesetting papers and theses involving the [MMT Langua
 
    ```tex
    \RequirePackage{import}
-   \subimport{mmt-latex-helpers}{all}
+   \subimport{mmt-latex-helpers/}{all}
    ```
    
    Here, we use the `subimport` command from the `import` package to allow `all.tex` to include files relatively to its containing directory.
@@ -45,7 +45,7 @@ Assuming you performed step 1 of the installation above, the following should co
 
 \begin{document}
 
-\begin{mmttheory}[T]
+\begin{mmttheory}{T}
 	S & \type\\
 	T & \type\\
 	t & T\\
@@ -69,7 +69,7 @@ So far no shiny external documentation is available; you have to read the inline
 \makecn{Unital}
 \makecn{neut}
 
-\begin{mmttheory}[\Unital]
+\begin{mmttheory}{\Unital}
     \mmtinclude{\SFOL}
     U      & \tp\\
     \circ  & \tm{U} \to \tm{U} \to \tm{U}\\
