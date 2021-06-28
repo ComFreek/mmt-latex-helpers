@@ -13,9 +13,12 @@
 \newcommand\andc{\cn{\mathnormal{\wedge}}}
 
 \newcommand\orc{\cn{\mathnormal{\vee}}}
-\newcommand\orElim{\orc_{\cn{E}}}
-\newcommand\orIntroL{\orc_{\cn{IL}}}
-\newcommand\orIntroR{\orc_{\cn{IR}}}
+\newcommand\orElimc{\cn{\orc E}}
+\newcommand\orElim{\midflowed{\orElimc}}
+\newcommand\orIntroLc{\cn{\orc IL}}
+\newcommand\orIntroRc{\cn{\orc IR}}
+\newcommand\orIntroL{\leftflowed{\orIntroLc}}
+\newcommand\orIntroR{\leftflowed{\orIntroRc}}
 
 % to typeset negation, use \neg (which is the same as \lnot as per LaTeX, see https://tex.stackexchange.com/questions/430677/what-is-the-difference-between-lnot-and-neg)
 
@@ -148,6 +151,9 @@
 \NewDocumentCommand\existsElim{mm}{%
 	\midflowed{\cn{\mathnormal{\exists}E}_{#1,#2}}%
 }
+\NewDocumentCommand\existsElimc{}{%
+	\cn{\mathnormal{\exists}E}%
+}
 
 \newcommand\frefl{\leftflowedcn{refl}}
 
@@ -157,6 +163,7 @@
 
 \newcommand\fexistsIntro{\leftflowedcn{existsI}}
 \newcommand\existsIntro{\leftflowedcn{\exists I}}
+\NewDocumentCommand\existsIntroc{}{\cn{\mathnormal{\exists}I}}%
 \newcommand\fexistsElim{\midflowedcn{existsE}}
 
 \newcommand\fimplIntro{\leftflowedcn{implI}}
@@ -210,13 +217,18 @@
 % alias for \depand
 \NewDocumentCommand\depwedge{mo}{\depand{#1}[#2]}
 
-\newcommand\andIntro{\leftflowedcn{\mathnormal{\wedge}I}}
+\newcommand\andIntro{\leftflowed{\andIntroc}}
+\newcommand\andIntroc{\cn{\mathnormal{\wedge}I}}
 \NewDocumentCommand\depandIntro{}{%
 	\leftflowedcn{\mathnormal{\wedge}I}%
 }
 
-\newcommand\andElimL{\rightflowedcn{\mathnormal{\wedge}EL}}
-\newcommand\andElimR{\rightflowedcn{\mathnormal{\wedge}ER}}
+\newcommand\andElimLc{\cn{\mathnormal{\wedge}EL}}
+\newcommand\andElimL{\rightflowed{\andElimLc}}
+
+\newcommand\andElimRc{\cn{\mathnormal{\wedge}ER}}
+\newcommand\andElimR{\rightflowed{\andElimRc}}
+
 \NewDocumentCommand\depandElimL{}{\rightflowedcn{\mathnormal{\wedge}EL}}
 \NewDocumentCommand\depandElimR{}{\rightflowedcn{\mathnormal{\wedge}ER}}
 % ==================================================
