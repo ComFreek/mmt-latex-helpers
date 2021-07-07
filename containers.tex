@@ -64,7 +64,11 @@
 \newcommand{\realizeDecl}[1]{\keyword{realize}{\;#1}}
 
 \NewDocumentEnvironment{mmttheory}{m+b}{%
-	\[\theory{#1} = \left\{\begin{array}{l@{\colon}l}#2\end{array}\right\}\]
+	\begin{align*}%
+		&\theory{#1} = \{\\%
+		&\quad\begin{array}{l@{\colon}l}#2\end{array}\\%
+		&\}%
+	\end{align*}%
 }{}
 \NewDocumentEnvironment{lfsig}{m+b}{%
 	\[#1 = \left\{\begin{array}{l@{\colon}l}#2\end{array}\right\}\]
@@ -72,7 +76,11 @@
 
 % args: view name, domain, codomain, body
 \NewDocumentEnvironment{mmtview}{mmm+b}{%
-	\[\view{#1}{#2}{#3} = \left\{\begin{array}{l@{=}l}#4\end{array}\right\}\]
+	\begin{align*}%
+		&\view{#1}{#2}{#3} = \{\\%
+		&\quad\begin{array}{l@{\;=\;}l}#4\end{array}\\%
+		&\}%
+	\end{align*}%
 }{}
 \NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
 \NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}#1}}\\}
