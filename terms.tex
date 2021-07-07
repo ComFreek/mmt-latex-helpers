@@ -2,7 +2,17 @@
 
 %%% MACROS FOR TYPESETTING MMT TERMS %%%
 \providecommand{\cn}[1]{\ensuremath{\mathtt{#1}}}
-\newcommand{\makecn}[1]{\expandafter\def\csname#1\endcsname{\cn{#1}\xspace}}
+
+% e.g., \makecn{neut} makes the typeset name of a constant "neut" available as under a new TeX macro \neut.
+% If you want the macro name to differ, pass another one as the optional argument, e.g.
+% \makecn[neutconst]{neut} would make "neut" being typeset by a new macro \neutconst.
+\NewDocumentCommand\makecn{om}{%
+	\IfValueTF{#1}{%
+		\expandafter\def\csname#1\endcsname{\cn{#2}\xspace}%
+	}{%
+		\expandafter\def\csname#2\endcsname{\cn{#2}\xspace}%
+	}%
+}
 
 % GENERAL
 % ==================================================
