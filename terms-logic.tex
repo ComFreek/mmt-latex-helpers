@@ -4,7 +4,6 @@
 \makecn{PLND}
 \makecn{prop}
 
-\RequirePackage{mathabx}
 \newcommand\dedc{\cn{\mathnormal{\Vdash}}}
 \newcommand\ded{\Vdash}
 
@@ -101,7 +100,8 @@
 % exists (weird name to not clash with latex's \exists)
 \NewDocumentCommand\xists{m o}{\quantifier{\exists\,}{#1}[#2]}
 
-%\newcommand{\of}[2]{#1\,::\,#2}
+\NewDocumentCommand\of{}{\mathbin{::}}
+\NewDocumentCommand\ofc{}{\mathnormal{\of}}
 %\newcommand{\denseOfTermType}[2]{#1\kern -0.1em::\kern -0.1em#2}
 
 %\newcommand{\spacedtmS}[2]{\tmS{\kern 0.05em#1\kern 0.06em#2}}
