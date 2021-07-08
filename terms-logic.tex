@@ -120,7 +120,11 @@
 % Typeset "\forall #1:#2, ..., #3:#4." with dense spacing and dense ldots
 %\newcommand{\denselexaryForall}[4]{\ensuremath{\forall\, #1\colon#2,\denseLdots,#3\colon#4.\hspace{0.6em}}}
 
+% untyped function symbol type
+\NewDocumentCommand\ufunSymType{}{\flexHomogeneousFunType{\term}{\term}}
 \NewDocumentCommand\funSymType{mmm}{\flexFunType{\tm{#1}}{\tm{#2}}{\tm{#3}}}
+% untyped predicate symbol type
+\NewDocumentCommand\upredSymType{}{\flexFunType{\term}{\term}{\prop}}
 \NewDocumentCommand\predSymType{mm}{\flexFunType{\tm{#1}}{\tm{#2}}{\prop}}
 
 % Typeset dense "\colon\ded"
