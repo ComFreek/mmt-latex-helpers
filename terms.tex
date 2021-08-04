@@ -51,6 +51,11 @@
 	.\ %
 }
 
+% quantifier symbol, first parameter name, first parameter type, last parameter name, last parameter type
+\NewDocumentCommand\flexQuantifier{m mo mo}{%
+	\quantifier{#1}{#2}[#3]\,\denseLdots\,\quantifier{#1}{#4}[#5]%
+}
+
 % (partially copied from frmacros, Florian Rabe's personal collection of LaTeX macros)
 
 \newcommand{\mmt}{\texorpdfstring{{\normalfont\scshape{Mmt}}\xspace}{MMT\ }}

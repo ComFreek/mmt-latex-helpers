@@ -80,10 +80,8 @@
 		\tpi{#1\,#2\,#3}\denseLdots\kern 0.1em\tpi{#4\,#5\,#6}%
 }}
 
-% Typeset "\Pi #1:#2 ... \Pi #3:#4." with good spacing and dense ldots
-\NewDocumentCommand\flexPi{momo}{\ensuremath{%
-		\tpi{#1}[#2]\,\denseLdots\,\tpi{#3}[#4]%
-}}
+% Typesets "\Pi #1:#2 ... \Pi #3:#4."
+\NewDocumentCommand\flexPi{momo}{\flexQuantifier{\Pi\,}{#1}[#2]{#3}[#4]}
 
 % Typeset #1 #2 ... #3
 \NewDocumentCommand\flexApp{mmm}{\ensuremath{%
