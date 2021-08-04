@@ -6,11 +6,20 @@
 % e.g., \makecn{neut} makes the typeset name of a constant "neut" available as under a new TeX macro \neut.
 % If you want the macro name to differ, pass another one as the optional argument, e.g.
 % \makecn[neutconst]{neut} would make "neut" being typeset by a new macro \neutconst.
-\NewDocumentCommand\makecn{om}{%
-	\IfValueTF{#1}{%
-		\expandafter\def\csname#1\endcsname{\cn{#2}\xspace}%
+% star the command to force overwrite previous commands (e.g., built-in in latex or other packages)
+\NewDocumentCommand\makecn{som}{%
+	\IfBooleanTF{#1}{
+		\IfValueTF{#2}{%
+			\expandafter\def\csname#2\endcsname{\cn{#3}\xspace}%
+		}{%
+			\expandafter\def\csname#3\endcsname{\cn{#3}\xspace}%
+		}%
 	}{%
-		\expandafter\def\csname#2\endcsname{\cn{#2}\xspace}%
+		\IfValueTF{#2}{%
+			\expandafter\NewDocumentCommand\csname#2\endcsname{}{\cn{#3}\xspace}%
+		}{%
+			\expandafter\NewDocumentCommand\csname#3\endcsname{}{\cn{#3}\xspace}%
+		}%
 	}%
 }
 
@@ -73,7 +82,7 @@
 
 % HARD-TYPED TERMS
 % ==================================================
-\makecn{tp}
+\makecn*{tp}
 \newcommand{\tm}[1]{\tmSymbol\ #1}
 \newcommand\tmSymbol{\cn{tm}}
 % ==================================================
