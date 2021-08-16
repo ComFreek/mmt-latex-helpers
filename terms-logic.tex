@@ -148,7 +148,7 @@
 \newcommand{\rightflowedcn}[1]{\rightflowed{\cn{#1}}}
 
 \NewDocumentCommand\forallIntro{mo}{%
-	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\IfValueT{#2}{#2}}}%
+	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\colon\IfValueT{#2}{#2}}}%
 }
 \NewDocumentCommand\forallIntroc{}{\cn{\mathnormal{\forall}I}}%
 \NewDocumentCommand\existsElim{mm}{%
