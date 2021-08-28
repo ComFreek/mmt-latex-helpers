@@ -38,11 +38,12 @@
 % `\const{c}{A}`     typesets `c: A`
 % `\const{c}{A}[t]`  typesets `c: A
 % `\const*{c}{A}[t]` typesets `c: A [= t]`
-\NewDocumentCommand\const{s m m o}{%
+\NewDocumentCommand\cst{s m m o}{%
 	#2\colon #3\IfValueT{#4}{%
 		\,\IfBooleanTF{#1}{[=#4]}{= #4}
 	}%
 }
+\let\const\cst% deprecated alias, please switch to \cst
 
 \NewDocumentCommand\paraincl{m m}{%
 	\keyword{include}\;#1\ #2%
