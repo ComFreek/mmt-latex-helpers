@@ -27,7 +27,10 @@
 	\keyword{diagram}\;#1\IfValueT{#2}{\colon #2}%
 }
 
-\newcommand{\view}[3]{\operatorname{\mathbf{view}}\;#1\colon #2 \to #3}
+\NewDocumentCommand\morph{mmmO{morph}}{%
+	\operatorname{\mathbf{#4}}\;#1\colon #2 \to #3%
+}
+\NewDocumentCommand\view{mmm}{\morph{#1}{#2}{#3}[view]}
 
 \NewDocumentCommand\incl{s m o}{%
 	\keyword{include}\;#2\IfValueT{#3}{%
