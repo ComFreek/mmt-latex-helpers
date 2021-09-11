@@ -88,8 +88,9 @@
 % HARD-TYPED TERMS
 % ==================================================
 \makecn*{tp}
-\makecn[tmSymbol]{tm}
-\newcommand{\tm}[1]{\tmSymbol\ #1}
+\makecn[tmc]{tm}
+\NewDocumentCommand\tm{m}{\tmc\ #1}
+\NewDocumentCommand\tmSymbol{}{\tmc} % deprecated alias of \tmc
 % ==================================================
 
 % SOFT-TYPED TERMS

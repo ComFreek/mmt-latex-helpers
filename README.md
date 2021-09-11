@@ -77,3 +77,6 @@ So far no shiny external documentation is available; you have to read the inline
     \neut  & \ded \fall{x}[\tm{U}] e \circ x \doteq x
 \end{mmttheory}
 ```
+
+Macros suffixed with `c` (for *c*onstant) usually expand to constant names (without any left/right space padding) as such.
+While `\tm{T}` expands to `tm T` with a good font chosen for `tm` of spacing towards `T`, the macro `\tmc` exapnds to just `tm` with a good font.
