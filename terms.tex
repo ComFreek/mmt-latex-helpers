@@ -7,18 +7,18 @@
 % If you want the macro name to differ, pass another one as the optional argument, e.g.
 % \makecn[neutconst]{neut} would make "neut" being typeset by a new macro \neutconst.
 % star the command to force overwrite previous commands (e.g., built-in in latex or other packages)
-\NewDocumentCommand\makecn{som}{%
+\NewDocumentCommand\makecn{somO{\cn}}{%
 	\IfBooleanTF{#1}{
 		\IfValueTF{#2}{%
-			\expandafter\def\csname#2\endcsname{\cn{#3}\xspace}%
+			\expandafter\def\csname#2\endcsname{#4{#3}\xspace}%
 		}{%
-			\expandafter\def\csname#3\endcsname{\cn{#3}\xspace}%
+			\expandafter\def\csname#3\endcsname{#4{#3}\xspace}%
 		}%
 	}{%
 		\IfValueTF{#2}{%
-			\expandafter\NewDocumentCommand\csname#2\endcsname{}{\cn{#3}\xspace}%
+			\expandafter\NewDocumentCommand\csname#2\endcsname{}{#4{#3}\xspace}%
 		}{%
-			\expandafter\NewDocumentCommand\csname#3\endcsname{}{\cn{#3}\xspace}%
+			\expandafter\NewDocumentCommand\csname#3\endcsname{}{#4{#3}\xspace}%
 		}%
 	}%
 }
