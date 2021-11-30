@@ -51,9 +51,20 @@
 	.\ %
 }
 
-% quantifier symbol, first parameter name, first parameter type, last parameter name, last parameter type
+% Typesets flexary quantifier usage.
+% Examples:
+%   - `Q x1 ... xn.`
+%     use `\flexQuantifier{Q}{x1}{xn}`
+%   - `Q x1 ... xn: a.`
+%     use `\flexQuantifier{Q}{x1}{xn}[a]`
+%   - `Q x1: a1. ... Q xn: an.`
+%     use `\flexQuantifier{Q}{x1}[a1]{xn}[an]
 \NewDocumentCommand\flexQuantifier{m mo mo}{%
-	\quantifier{#1}{#2}[#3]\,\denseLdots\,\quantifier{#1}{#4}[#5]%
+	\IfValueTF{#3}{%
+		\quantifier{#1}{#2}[#3]\,\denseLdots\,\quantifier{#1}{#4}[#5]%
+	}{%
+		\quantifier{#1}{#2 \denseLdots #4}[#5]%
+	}
 }
 
 % (partially copied from frmacros, Florian Rabe's personal collection of LaTeX macros)
