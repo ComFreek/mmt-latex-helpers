@@ -148,11 +148,11 @@
 \newcommand{\rightflowedcn}[1]{\rightflowed{\cn{#1}}}
 
 \NewDocumentCommand\forallIntro{mo}{%
-	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\colon\IfValueT{#2}{#2}}}%
+	\leftflowed{\cn{\mathnormal{\forall}I}_{#1\IfValueT{#2}{\colon#2}}}%
 }
 \NewDocumentCommand\forallIntroc{}{\cn{\mathnormal{\forall}I}}%
-\NewDocumentCommand\existsElim{mm}{%
-	\midflowed{\cn{\mathnormal{\exists}E}_{#1,#2}}%
+\NewDocumentCommand\existsElim{momo}{%
+	\midflowed{\cn{\mathnormal{\exists}E}_{#1\IfValueT{#2}{\colon#2},#3\IfValueT{#4}{\colon#4}}}%
 }
 \NewDocumentCommand\existsElimc{}{%
 	\cn{\mathnormal{\exists}E}%
@@ -196,13 +196,13 @@
 %\newcommand\fcong{\midflowedcn{cong}}
 
 % typeset variable name "pf" (and variants) for LF variables representing proofs (in natural deduction calculi)
-% \pf* typesets "pf'"
+% \pf* typesets "\tilde{pf}"
 % \pf[x] typesets "{pf^{x}}" (thus it enables you to use `\lam{\pf[x]^p \pf[x]^s}`)
 \NewDocumentCommand\pf{so}{%
 	\IfValueTF{#2}{%
 		{\mathit{pf^{#2}}}%
 	}{%
-		\IfBooleanTF{#1}{{\mathit{pf'}}}{\mathit{pf}}%
+		\IfBooleanTF{#1}{{\mathit{\tilde{pf}}}}{\mathit{pf}}%
 	}%
 }
 
