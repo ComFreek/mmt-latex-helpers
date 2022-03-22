@@ -27,7 +27,7 @@
 	\keyword{diagram}\;#1\IfValueT{#2}{\colon #2}%
 }
 
-\NewDocumentCommand\morph{mmmO{morph}}{%
+\NewDocumentCommand\morph{mmmO{mor}}{%
 	\operatorname{\mathbf{#4}}\;#1\colon #2 \to #3%
 }
 \NewDocumentCommand\view{mmm}{\morph{#1}{#2}{#3}[view]}
@@ -74,20 +74,20 @@
 		&\}%
 	\end{align*}%
 }{}
-\NewDocumentEnvironment{lfsig}{m+b}{%
-	\[#1 = \left\{\begin{array}{l@{\colon}l}#2\end{array}\right\}\]
+\NewDocumentEnvironment{lfsig}{mO{}+b}{%
+	\[#1 = #2\left\{\begin{array}{l@{\colon}l}#3\end{array}\right\}\]
 }{}
 
 % args: view name, domain, codomain, body
-\NewDocumentEnvironment{mmtview}{mmm+b}{%
+\NewDocumentEnvironment{mmtmor}{mmmO{mor}+b}{%
 	\begin{align*}%
-		&\view{#1}{#2}{#3} = \{\\%
-		&\quad\begin{array}{l@{\;=\;}l}#4\end{array}\\%
+		&\morph{#1}{#2}{#3}[#4] = \{\\%
+		&\quad\begin{array}{l@{\;=\;}l}#5\end{array}\\%
 		&\}%
 	\end{align*}%
 }{}
 \NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
-\NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}#1}}\\}
+\NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}\text{/* #1 */}}}\\}
 \NewDocumentEnvironment{lfsigmor}{m+b}{%
 	\[#1 = \left\{\begin{array}{l@{=}l}#2\end{array}\right\}\]%
 }{}
