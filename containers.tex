@@ -71,16 +71,17 @@
 	\providecommand{\nl}[1][.2cm]{\\[##1]}%
 	\providecommand{\txt}[1]{\multicolumn{2}{l}{\text{\rm##1}}}%
 	\providecommand{\eqcont}{\\\multicolumn{1}{l@{\;\hphantom{#1}\;}}{}&\quad}%
-	\providecommand{\eqdef}{\\\multicolumn{1}{l}{}&\hspace{-0.5em}=}%
+	% \def to force overwriting \eqdef from some other packages
+	\def\eqdef{\\\multicolumn{1}{l}{}&\hspace{-0.5em}=}%
 	\providecommand{\eqskip}{\\[0.5cm]}%
 	\[\begin{array}{l@{\;#1\;}l@{\quad}l}%
 		#2%
 	\end{array}\]%
 }{}
 \NewDocumentEnvironment{eqnstyped}{+b}{%
-	\begin{eqnsnew}[\colon]%
+	\begin{eqns}[\colon]%
 		#1%
-	\end{eqnsnew}%
+	\end{eqns}%
 }{}
 
 \NewDocumentEnvironment{mmttheory}{m+b}{%
