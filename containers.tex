@@ -79,6 +79,8 @@
 	\end{array}\]%
 }{}
 \NewDocumentEnvironment{eqnstyped}{+b}{%
+	% to give definitions without typing in eqnstyped
+	\providecommand{\eqeq}[1]{\multicolumn{1}{l@{\;=\;}}{##1}}%
 	\begin{eqns}[\colon]%
 		#1%
 	\end{eqns}%
@@ -95,14 +97,22 @@
 	\[#1 = #2\left\{\begin{array}{l@{\colon}l}#3\end{array}\right\}\]
 }{}
 
-% args: view name, domain, codomain, body
-\NewDocumentEnvironment{mmtmor}{mmmO{mor}+b}{%
+% args: mor name, domain, codomain, keyword, decl separator, body
+\NewDocumentEnvironment{mmtmor}{mmmO{mor}O{=}+b}{%
 	\begin{align*}%
 		&\morph{#1}{#2}{#3}[#4] = \{\\%
-		&\quad\begin{array}{l@{\;=\;}l}#5\end{array}\\%
+			&\quad\begin{array}{l@{\;#5\;}l}#5\end{array}\\%
 		&\}%
 	\end{align*}%
 }{}
+
+% args: view name, domain, codomain, body
+\NewDocumentEnvironment{mmtmortyped}{mmmO{mor}+b}{%
+	\begin{mmtmor}{#1}{#2}{#3}[#4][\colon]%
+		#5%
+	\end{mmtmor}%
+}{}
+
 \NewExpandableDocumentCommand\mmtinclude{m}{\multicolumn{2}{l}{\includeDecl{#1}}\\}
 \NewExpandableDocumentCommand\mmtcomment{m}{\multicolumn{2}{l}{{\color{gray}\text{/* #1 */}}}\\}
 \NewDocumentEnvironment{lfsigmor}{m+b}{%
